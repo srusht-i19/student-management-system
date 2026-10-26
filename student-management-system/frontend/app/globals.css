@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body { @apply bg-paper font-sans text-ink antialiased; }
+  h1, h2, h3 { @apply font-display; }
+  :focus-visible { @apply outline-none ring-2 ring-gold ring-offset-2 ring-offset-paper; }
+}
+
+/* The one orchestrated moment: register rows are called out one by one on the landing hero. */
+@keyframes roll-call {
+  from { opacity: 0; transform: translateX(-14px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.roll-call { animation: roll-call .5s cubic-bezier(.2,.7,.2,1) both; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.toast-in { animation: toast-in .25s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .roll-call, .toast-in { animation: none; }
+}
