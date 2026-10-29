@@ -1,25 +1,29 @@
 import { Type } from 'class-transformer';
-import { IsInt, IsOptional, IsString, Max, MaxLength, Min } from 'class-validator';
+import { IsEnum, IsInt, IsOptional, IsString, Max, MaxLength, Min } from 'class-validator';
+import { ListQueryDto } from '../../common/list-view/list-query.dto';
 import { Trim } from '../../common/transforms';
+import { Gender, StudentStatus } from '../entities/student.entity';
 
-/** Validates ?search=, ?page= and ?limit= on GET /api/students. */
-export class ListStudentsQueryDto {
+/** Common list options (ListQueryDto) plus student-specific filters. */
+export class ListStudentsQueryDto extends ListQueryDto {
+  @IsOptional()
+  @IsEnum(StudentStatus, { message: 'status must be Active or Inactive' })
+  status?: StudentStatus;
+
+  @IsOptional()
+  @IsEnum(Gender, { message: 'gender must be Male, Female or Other' })
+  gender?: Gender;
+
   @IsOptional()
   @Trim()
   @IsString()
-  @MaxLength(100, { message: 'search must be at most 100 characters' })
-  search?: string;
+  @MaxLength(50)
+  course?: string;
 
   @IsOptional()
   @Type(() => Number)
-  @IsInt({ message: 'page must be a whole number' })
-  @Min(1, { message: 'page must be 1 or greater' })
-  page?: number;
-
-  @IsOptional()
-  @Type(() => Number)
-  @IsInt({ message: 'limit must be a whole number' })
-  @Min(1, { message: 'limit must be between 1 and 100' })
-  @Max(100, { message: 'limit must be between 1 and 100' })
-  limit?: number;
+  @IsInt({ message: 'year must be a whole number' })
+  @Min(1, { message: 'year must be between 1 and 4' })
+  @Max(4, { message: 'year must be between 1 and 4' })
+  year?: number;
 }
