@@ -1,5 +1,8 @@
 import axios, { AxiosError } from 'axios';
+import type { Course, CourseInput } from '@/types/course';
+import type { ListParams, ListResult } from '@/types/list';
 import type { Student, StudentInput } from '@/types/student';
+import type { Teacher, TeacherInput } from '@/types/teacher';
 
 export const TOKEN_KEY = 'sms_token';
 export const USER_KEY = 'sms_user';
@@ -70,3 +73,35 @@ export const updateStudent = (id: number | string, data: StudentInput) =>
 
 export const deleteStudent = (id: number) =>
   api.delete<{ message: string }>(`/students/${id}`).then((r) => r.data);
+
+// ---------- Courses ----------
+export const getCourses = (params: ListParams) =>
+  api.get<ListResult<Course>>('/courses', { params }).then((r) => r.data);
+
+export const getCourse = (id: number | string) =>
+  api.get<{ course: Course }>(`/courses/${id}`).then((r) => r.data.course);
+
+export const createCourse = (data: CourseInput) =>
+  api.post<{ course: Course }>('/courses', data).then((r) => r.data.course);
+
+export const updateCourse = (id: number | string, data: CourseInput) =>
+  api.put<{ course: Course }>(`/courses/${id}`, data).then((r) => r.data.course);
+
+export const deleteCourse = (id: number) =>
+  api.delete<{ message: string }>(`/courses/${id}`).then((r) => r.data);
+
+// ---------- Teachers ----------
+export const getTeachers = (params: ListParams) =>
+  api.get<ListResult<Teacher>>('/teachers', { params }).then((r) => r.data);
+
+export const getTeacher = (id: number | string) =>
+  api.get<{ teacher: Teacher }>(`/teachers/${id}`).then((r) => r.data.teacher);
+
+export const createTeacher = (data: TeacherInput) =>
+  api.post<{ teacher: Teacher }>('/teachers', data).then((r) => r.data.teacher);
+
+export const updateTeacher = (id: number | string, data: TeacherInput) =>
+  api.put<{ teacher: Teacher }>(`/teachers/${id}`, data).then((r) => r.data.teacher);
+
+export const deleteTeacher = (id: number) =>
+  api.delete<{ message: string }>(`/teachers/${id}`).then((r) => r.data);

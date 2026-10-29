@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import DashboardTabs from '@/components/DashboardTabs';
 import Navbar from '@/components/Navbar';
 import Spinner from '@/components/Spinner';
 import { TOKEN_KEY } from '@/lib/api';
@@ -27,6 +28,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <div className="min-h-screen">
       <Navbar mode="app" />
+      <DashboardTabs />
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">{children}</main>
     </div>
   );
